@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   redis-db:
@@ -29,7 +29,12 @@ services:
     links:
       - db:database
     environment:
-        ETHEREUM_JSONRPC_VARIANT: 'geth'
+      ETHEREUM_JSONRPC_VARIANT: "geth"
+      ETHEREUM_JSONRPC_URL: "https://devnet.igralabs.com:8545"
+      ETHEREUM_JSONRPC_WS_URL: "wss://devnet.igralabs.com:8545"
+      ETHEREUM_JSONRPC_HTTP_URL: "https://devnet.igralabs.com:8545"
+      ETHEREUM_JSONRPC_TRACE_URL: "https://devnet.igralabs.com:8545"
+      CHAIN_ID: "2600"
 
   visualizer:
     extends:
@@ -47,6 +52,10 @@ services:
     extends:
       file: ./services/frontend.yml
       service: frontend
+    environment:
+      NEXT_PUBLIC_NETWORK_ID: "2600"
+      NEXT_PUBLIC_NETWORK_RPC_URL: "https://devnet.igralabs.com:8545"
+      HOST: "0.0.0.0"
 
   stats-db-init:
     extends:
