@@ -5,22 +5,16 @@ services:
     image: postgres:17
     volumes:
       - ./blockscout-db-data:/var/lib/postgresql/data
-      - type: tmpfs
-        target: /var/lib/postgresql/socket
-        tmpfs:
-          mode: 1777
+      - ./pg-socket:/var/lib/postgresql/socket
       - type: tmpfs
         target: /var/lib/postgresql/tmp
-        tmpfs:
-          mode: 1777
     entrypoint:
       - sh
       - -c
       - |
-        mkdir -p /var/lib/postgresql/socket /var/lib/postgresql/tmp
+        mkdir -p /var/lib/postgresql/socket
         chown -R 2000:2000 /var/lib/postgresql/data
-        # Setting permissions (ignore errors if they occur)
-        chmod 1777 /var/lib/postgresql/socket /var/lib/postgresql/tmp || true
+        chown 2000:2000 /var/lib/postgresql/socket
 
   db:
     image: postgres:17
@@ -48,14 +42,9 @@ services:
         published: 7432
     volumes:
       - ./blockscout-db-data:/var/lib/postgresql/data
-      - type: tmpfs
-        target: /var/lib/postgresql/socket
-        tmpfs:
-          mode: 1777
+      - ./pg-socket:/var/lib/postgresql/socket
       - type: tmpfs
         target: /var/lib/postgresql/tmp
-        tmpfs:
-          mode: 1777
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U blockscout -d blockscout"]
       interval: 10s
