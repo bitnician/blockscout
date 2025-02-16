@@ -1,14 +1,14 @@
 map $http_upgrade $connection_upgrade {
+
   default upgrade;
   ''      close;
 }
 
 server {
-    listen       80 default_server;
-    server_name  devnet.igralabs.com;
+    listen       80;
+    server_name  localhost;
     proxy_http_version 1.1;
 
-    # API, socket, sitemap, and auth requests go to the backend.
     location ~ ^/(api(?!-docs$)|socket|sitemap.xml|auth/auth0|auth/auth0/callback|auth/logout) {
         proxy_pass            ${BACK_PROXY_PASS};
         proxy_http_version    1.1;
@@ -20,8 +20,6 @@ server {
         proxy_set_header      Connection $connection_upgrade;
         proxy_cache_bypass    $http_upgrade;
     }
-    
-    # All other requests are proxied to the frontend.
     location / {
         proxy_pass            ${FRONT_PROXY_PASS};
         proxy_http_version    1.1;
@@ -34,14 +32,13 @@ server {
         proxy_cache_bypass    $http_upgrade;
     }
 }
-
 server {
     listen       8080;
-    server_name  devnet.igralabs.com;
+    server_name  localhost;
     proxy_http_version 1.1;
     proxy_hide_header Access-Control-Allow-Origin;
     proxy_hide_header Access-Control-Allow-Methods;
-    add_header 'Access-Control-Allow-Origin' 'http://devnet.igralabs.com' always;
+    add_header 'Access-Control-Allow-Origin' 'http://localhost' always;
     add_header 'Access-Control-Allow-Credentials' 'true' always;
     add_header 'Access-Control-Allow-Methods' 'PUT, GET, POST, OPTIONS, DELETE, PATCH' always;
 
@@ -57,14 +54,13 @@ server {
         proxy_cache_bypass    $http_upgrade;
     }
 }
-
 server {
     listen       8081;
-    server_name  devnet.igralabs.com;
+    server_name  localhost;
     proxy_http_version 1.1;
     proxy_hide_header Access-Control-Allow-Origin;
     proxy_hide_header Access-Control-Allow-Methods;
-    add_header 'Access-Control-Allow-Origin' 'http://devnet.igralabs.com' always;
+    add_header 'Access-Control-Allow-Origin' 'http://localhost' always;
     add_header 'Access-Control-Allow-Credentials' 'true' always;
     add_header 'Access-Control-Allow-Methods' 'PUT, GET, POST, OPTIONS, DELETE, PATCH' always;
     add_header 'Access-Control-Allow-Headers' 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,x-csrf-token' always;
@@ -84,7 +80,7 @@ server {
         proxy_set_header      Connection $connection_upgrade;
         proxy_cache_bypass    $http_upgrade;
         if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Allow-Origin' 'http://devnet.igralabs.com' always;
+            add_header 'Access-Control-Allow-Origin' 'http://localhost' always;
             add_header 'Access-Control-Allow-Credentials' 'true' always;
             add_header 'Access-Control-Allow-Methods' 'PUT, GET, POST, OPTIONS, DELETE, PATCH' always;
             add_header 'Access-Control-Allow-Headers' 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,x-csrf-token' always;
