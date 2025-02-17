@@ -38,10 +38,10 @@ services:
       - db:database
     environment:
       ETHEREUM_JSONRPC_VARIANT: "geth"
-      ETHEREUM_JSONRPC_URL: "http://igra-dev-el:8545"
-      ETHEREUM_JSONRPC_WS_URL: "ws://igra-dev-el:8545"
-      ETHEREUM_JSONRPC_HTTP_URL: "http://igra-dev-el:8545"
-      ETHEREUM_JSONRPC_TRACE_URL: "http://igra-dev-el:8545"
+      ETHEREUM_JSONRPC_URL: "http://http://polygon-mainnet.g.alchemy.com/v2/eWCP8Mz_l0rnNCWZQXrkz0aXqX2hgRuD"
+      ETHEREUM_JSONRPC_WS_URL: "wss://http://polygon-mainnet.g.alchemy.com/v2/eWCP8Mz_l0rnNCWZQXrkz0aXqX2hgRuD"
+      ETHEREUM_JSONRPC_HTTP_URL: "http://http://polygon-mainnet.g.alchemy.com/v2/eWCP8Mz_l0rnNCWZQXrkz0aXqX2hgRuD"
+      ETHEREUM_JSONRPC_TRACE_URL: "http://http://polygon-mainnet.g.alchemy.com/v2/eWCP8Mz_l0rnNCWZQXrkz0aXqX2hgRuD"
       CHAIN_ID: "2600"
 
   visualizer:
@@ -68,7 +68,7 @@ services:
       - igra-l2-network
     environment:
       NEXT_PUBLIC_NETWORK_ID: "2600"
-      NEXT_PUBLIC_NETWORK_RPC_URL: "http://igra-dev-el:8545"
+      NEXT_PUBLIC_NETWORK_RPC_URL: "http://http://polygon-mainnet.g.alchemy.com/v2/eWCP8Mz_l0rnNCWZQXrkz0aXqX2hgRuD"
       HOST: "0.0.0.0"
 
   stats-db-init:
