@@ -39,6 +39,11 @@ services:
       INDEXER_INTERNAL_TRANSACTIONS_TRACER_TYPE: "opcode"
       CHAIN_ID: "2600"
 
+      TRACE_FIRST_BLOCK: "1"
+      TRACE_LAST_BLOCK: "latest"
+      ETHEREUM_JSONRPC_DEBUG_TRACE_TRANSACTION_TIMEOUT: "20s"
+      ETHEREUM_JSONRPC_HTTP_TIMEOUT: "30000"
+
   visualizer:
     extends:
       file: ./services/visualizer.yml
