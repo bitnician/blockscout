@@ -5,15 +5,11 @@ services:
     extends:
       file: ./services/redis.yml
       service: redis-db
-    networks:
-      - igra-l2-network
 
   db-init:
     extends:
       file: ./services/db.yml
       service: db-init
-    networks:
-      - igra-l2-network
 
   db:
     depends_on:
@@ -22,8 +18,6 @@ services:
     extends:
       file: ./services/db.yml
       service: db
-    networks:
-      - igra-l2-network
 
   backend:
     depends_on:
@@ -32,8 +26,6 @@ services:
     extends:
       file: ./services/backend.yml
       service: backend
-    networks:
-      - igra-l2-network
     links:
       - db:database
     environment:
@@ -48,15 +40,11 @@ services:
     extends:
       file: ./services/visualizer.yml
       service: visualizer
-    networks:
-      - igra-l2-network
 
   sig-provider:
     extends:
       file: ./services/sig-provider.yml
       service: sig-provider
-    networks:
-      - igra-l2-network
 
   frontend:
     depends_on:
@@ -64,8 +52,7 @@ services:
     extends:
       file: ./services/frontend.yml
       service: frontend
-    networks:
-      - igra-l2-network
+
     environment:
       NEXT_PUBLIC_NETWORK_ID: "2600"
       NEXT_PUBLIC_NETWORK_RPC_URL: "http://igra-dev-el:8545"
@@ -75,8 +62,6 @@ services:
     extends:
       file: ./services/stats.yml
       service: stats-db-init
-    networks:
-      - igra-l2-network
 
   stats-db:
     depends_on:
@@ -85,8 +70,6 @@ services:
     extends:
       file: ./services/stats.yml
       service: stats-db
-    networks:
-      - igra-l2-network
 
   stats:
     depends_on:
@@ -95,8 +78,6 @@ services:
     extends:
       file: ./services/stats.yml
       service: stats
-    networks:
-      - igra-l2-network
 
   user-ops-indexer:
     depends_on:
@@ -105,8 +86,6 @@ services:
     extends:
       file: ./services/user-ops-indexer.yml
       service: user-ops-indexer
-    networks:
-      - igra-l2-network
 
   proxy:
     depends_on:
@@ -116,9 +95,3 @@ services:
     extends:
       file: ./services/nginx.yml
       service: proxy
-    networks:
-      - igra-l2-network
-
-networks:
-  igra-l2-network:
-    name: igra-l2-network
