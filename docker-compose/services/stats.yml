@@ -13,8 +13,10 @@ services:
       - -c
       - |
         mkdir -p /var/lib/postgresql/socket /var/lib/postgresql/tmp
+        chmod 2777 /var/lib/postgresql/socket
         chown -R 2000:2000 /var/lib/postgresql/data
-        chown 2000:2000 /var/lib/postgresql/socket
+        chown -R 2000:2000 /var/lib/postgresql/socket
+        chmod 0700 /var/lib/postgresql/data
 
   stats-db:
     image: postgres:17
@@ -22,7 +24,6 @@ services:
     shm_size: 256m
     restart: always
     container_name: "stats-db"
-    # Use array syntax to pass parameters cleanly
     command:
       [
         "postgres",
@@ -30,12 +31,15 @@ services:
         "max_connections=200",
         "-c",
         "unix_socket_directories=/var/lib/postgresql/socket",
+        "-c",
+        "listen_addresses=*",
       ]
     environment:
       POSTGRES_DB: "stats"
       POSTGRES_USER: "stats"
       POSTGRES_PASSWORD: "n0uejXPl61ci6ldCuE2gQU5Y"
       TMPDIR: "/var/lib/postgresql/tmp"
+      PGDATA: "/var/lib/postgresql/data"
     ports:
       - target: 5432
         published: 7433
@@ -45,11 +49,11 @@ services:
       - type: tmpfs
         target: /var/lib/postgresql/tmp
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U stats -d stats"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
+      test: ["CMD-SHELL", "pg_isready -U stats -d stats -h localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   stats:
     image: ghcr.io/blockscout/stats:${STATS_DOCKER_TAG:-latest}
