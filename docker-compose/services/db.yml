@@ -5,11 +5,15 @@ services:
     image: postgres:17
     volumes:
       - ./blockscout-db-data:/var/lib/postgresql/data
+      - ./postgresql-run:/var/run/postgresql
     entrypoint:
       - sh
       - -c
       - |
         chown -R 2000:2000 /var/lib/postgresql/data
+        mkdir -p /var/run/postgresql
+        chmod 2777 /var/run/postgresql
+        chown -R 2000:2000 /var/run/postgresql
 
   db:
     image: postgres:17
@@ -17,19 +21,17 @@ services:
     shm_size: 256m
     restart: always
     container_name: "db"
+    command: postgres -c 'max_connections=200' -c 'client_connection_check_interval=60000'
     environment:
       POSTGRES_DB: "blockscout"
       POSTGRES_USER: "blockscout"
       POSTGRES_PASSWORD: "ceWb1MeLBEeOIfk65gU8EjF8"
-      PG_SOCKET_DIR: /tmp/postgresql
     ports:
       - target: 5432
         published: 7432
     volumes:
       - ./blockscout-db-data:/var/lib/postgresql/data
-    tmpfs:
-      - /tmp
-    command: sh -c "mkdir -p /tmp/postgresql && exec postgres -c 'max_connections=200' -c 'client_connection_check_interval=60000'"
+      - ./postgresql-run:/var/run/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U blockscout -d blockscout"]
       interval: 10s
