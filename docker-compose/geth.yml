@@ -39,7 +39,7 @@ services:
     environment:
       ETHEREUM_JSONRPC_VARIANT: "geth"
       ETHEREUM_JSONRPC_URL: "http://igra-dev-el:8545"
-      ETHEREUM_JSONRPC_WS_URL: "wss://igra-dev-el:8545"
+      ETHEREUM_JSONRPC_WS_URL: "wss://igra-dev-el:8546"
       ETHEREUM_JSONRPC_HTTP_URL: "http://igra-dev-el:8545"
       ETHEREUM_JSONRPC_TRACE_URL: "http://igra-dev-el:8545"
       CHAIN_ID: "2600"
