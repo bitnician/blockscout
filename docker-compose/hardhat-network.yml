@@ -31,10 +31,10 @@ services:
     environment:
       ETHEREUM_JSONRPC_VARIANT: "geth"
 
-      ETHEREUM_JSONRPC_URL: "http://host.docker.internal:6000/"
-      ETHEREUM_JSONRPC_WS_URL: "ws://host.docker.internal:6000/"
-      ETHEREUM_JSONRPC_HTTP_URL: "http://host.docker.internal:6000/"
-      ETHEREUM_JSONRPC_TRACE_URL: "http://host.docker.internal:6000/"
+      ETHEREUM_JSONRPC_URL: "http://172.17.0.1:6000/"
+      ETHEREUM_JSONRPC_WS_URL: "ws://172.17.0.1:6000/"
+      ETHEREUM_JSONRPC_HTTP_URL: "http://172.17.0.1:6000/"
+      ETHEREUM_JSONRPC_TRACE_URL: "http://172.17.0.1:6000/"
       INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: "true"
       INDEXER_INTERNAL_TRANSACTIONS_TRACER_TYPE: "opcode"
       CHAIN_ID: "2600"
@@ -43,6 +43,9 @@ services:
       TRACE_LAST_BLOCK: "latest"
       ETHEREUM_JSONRPC_DEBUG_TRACE_TRANSACTION_TIMEOUT: "20s"
       ETHEREUM_JSONRPC_HTTP_TIMEOUT: "30000"
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   visualizer:
     extends:
@@ -62,7 +65,7 @@ services:
       service: frontend
     environment:
       NEXT_PUBLIC_NETWORK_ID: "2600"
-      NEXT_PUBLIC_NETWORK_RPC_URL: http://host.docker.internal:6000/
+      NEXT_PUBLIC_NETWORK_RPC_URL: http://172.17.0.1:6000/
 
   stats-db-init:
     extends:
