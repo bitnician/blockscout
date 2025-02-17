@@ -31,7 +31,7 @@ services:
     environment:
       ETHEREUM_JSONRPC_VARIANT: "geth"
       ETHEREUM_JSONRPC_URL: "http://172.18.0.2"
-      ETHEREUM_JSONRPC_WS_URL: "wss://172.18.0.2"
+      ETHEREUM_JSONRPC_WS_URL: "ws://172.18.0.2"
       ETHEREUM_JSONRPC_HTTP_URL: "http://172.18.0.2"
       ETHEREUM_JSONRPC_TRACE_URL: "http://172.18.0.2"
       CHAIN_ID: "2600"
