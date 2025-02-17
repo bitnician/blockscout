@@ -32,8 +32,8 @@ services:
     volumes:
       - ./blockscout-db-data:/var/lib/postgresql/data
       - ./postgresql-run:/var/run/postgresql
-      - type: tmpfs
-        target: /tmp
+    tmpfs:
+      - /tmp:rw,exec,size=67108864,mode=1777
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U blockscout -d blockscout"]
       interval: 10s
