@@ -9,4 +9,4 @@ services:
     container_name: "frontend"
     env_file:
       - ../envs/common-frontend.env
-    entrypoint: sh -c "chmod -R u+w ./public/assets && ./make_envs_script.sh"
+    user: "0:0"
