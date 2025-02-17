@@ -122,4 +122,3 @@ services:
 networks:
   igra-l2-network:
     name: igra-l2-network
-    external: true
