@@ -17,7 +17,7 @@ services:
 
   db:
     image: postgres:17
-    user: 2000:2000
+    user: "2000:2000"
     shm_size: 256m
     restart: always
     container_name: "db"
@@ -32,6 +32,8 @@ services:
     volumes:
       - ./blockscout-db-data:/var/lib/postgresql/data
       - ./postgresql-run:/var/run/postgresql
+      - type: tmpfs
+        target: /tmp
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U blockscout -d blockscout"]
       interval: 10s
