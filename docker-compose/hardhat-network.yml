@@ -37,7 +37,7 @@ services:
       ETHEREUM_JSONRPC_TRACE_URL: "http://host.docker.internal:6000/"
       INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: "true"
       INDEXER_INTERNAL_TRANSACTIONS_TRACER_TYPE: "opcode"
-      CHAIN_ID: "31337"
+      CHAIN_ID: "2600"
 
   visualizer:
     extends:
@@ -56,7 +56,7 @@ services:
       file: ./services/frontend.yml
       service: frontend
     environment:
-      NEXT_PUBLIC_NETWORK_ID: "31337"
+      NEXT_PUBLIC_NETWORK_ID: "2600"
       NEXT_PUBLIC_NETWORK_RPC_URL: http://host.docker.internal:6000/
 
   stats-db-init:
