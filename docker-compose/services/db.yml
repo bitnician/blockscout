@@ -5,11 +5,15 @@ services:
     image: postgres:17
     volumes:
       - ./blockscout-db-data:/var/lib/postgresql/data
+      - ./postgresql-run:/var/run/postgresql
     entrypoint:
       - sh
       - -c
       - |
         chown -R 2000:2000 /var/lib/postgresql/data
+        mkdir -p /var/run/postgresql
+        chmod 2777 /var/run/postgresql
+        chown -R 2000:2000 /var/run/postgresql
 
   db:
     image: postgres:17
@@ -27,6 +31,7 @@ services:
         published: 7432
     volumes:
       - ./blockscout-db-data:/var/lib/postgresql/data
+      - ./postgresql-run:/var/run/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U blockscout -d blockscout"]
       interval: 10s
