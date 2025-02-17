@@ -30,10 +30,10 @@ services:
       - db:database
     environment:
       ETHEREUM_JSONRPC_VARIANT: "geth"
-      ETHEREUM_JSONRPC_URL: "http://igra-dev-el:8545"
-      ETHEREUM_JSONRPC_WS_URL: "wss://igra-dev-el:8545"
-      ETHEREUM_JSONRPC_HTTP_URL: "http://igra-dev-el:8545"
-      ETHEREUM_JSONRPC_TRACE_URL: "http://igra-dev-el:8545"
+      ETHEREUM_JSONRPC_URL: "http://172.18.0.2"
+      ETHEREUM_JSONRPC_WS_URL: "wss://172.18.0.2"
+      ETHEREUM_JSONRPC_HTTP_URL: "http://172.18.0.2"
+      ETHEREUM_JSONRPC_TRACE_URL: "http://172.18.0.2"
       CHAIN_ID: "2600"
 
   visualizer:
@@ -55,7 +55,7 @@ services:
 
     environment:
       NEXT_PUBLIC_NETWORK_ID: "2600"
-      NEXT_PUBLIC_NETWORK_RPC_URL: "http://igra-dev-el:8545"
+      NEXT_PUBLIC_NETWORK_RPC_URL: "http://172.18.0.2"
       HOST: "0.0.0.0"
 
   stats-db-init:
