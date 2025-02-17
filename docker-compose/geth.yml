@@ -5,11 +5,15 @@ services:
     extends:
       file: ./services/redis.yml
       service: redis-db
+    networks:
+      - igra-l2-network
 
   db-init:
     extends:
       file: ./services/db.yml
       service: db-init
+    networks:
+      - igra-l2-network
 
   db:
     depends_on:
@@ -18,6 +22,8 @@ services:
     extends:
       file: ./services/db.yml
       service: db
+    networks:
+      - igra-l2-network
 
   backend:
     depends_on:
@@ -26,25 +32,31 @@ services:
     extends:
       file: ./services/backend.yml
       service: backend
+    networks:
+      - igra-l2-network
     links:
       - db:database
     environment:
       ETHEREUM_JSONRPC_VARIANT: "geth"
-      ETHEREUM_JSONRPC_URL: "http://172.18.0.2"
-      ETHEREUM_JSONRPC_WS_URL: "ws://172.18.0.2"
-      ETHEREUM_JSONRPC_HTTP_URL: "http://172.18.0.2"
-      ETHEREUM_JSONRPC_TRACE_URL: "http://172.18.0.2"
+      ETHEREUM_JSONRPC_URL: "http://igra-dev-el:8545"
+      ETHEREUM_JSONRPC_WS_URL: "wss://igra-dev-el:8545"
+      ETHEREUM_JSONRPC_HTTP_URL: "http://igra-dev-el:8545"
+      ETHEREUM_JSONRPC_TRACE_URL: "http://igra-dev-el:8545"
       CHAIN_ID: "2600"
 
   visualizer:
     extends:
       file: ./services/visualizer.yml
       service: visualizer
+    networks:
+      - igra-l2-network
 
   sig-provider:
     extends:
       file: ./services/sig-provider.yml
       service: sig-provider
+    networks:
+      - igra-l2-network
 
   frontend:
     depends_on:
@@ -52,16 +64,19 @@ services:
     extends:
       file: ./services/frontend.yml
       service: frontend
-
+    networks:
+      - igra-l2-network
     environment:
       NEXT_PUBLIC_NETWORK_ID: "2600"
-      NEXT_PUBLIC_NETWORK_RPC_URL: "http://172.18.0.2"
+      NEXT_PUBLIC_NETWORK_RPC_URL: "http://igra-dev-el:8545"
       HOST: "0.0.0.0"
 
   stats-db-init:
     extends:
       file: ./services/stats.yml
       service: stats-db-init
+    networks:
+      - igra-l2-network
 
   stats-db:
     depends_on:
@@ -70,6 +85,8 @@ services:
     extends:
       file: ./services/stats.yml
       service: stats-db
+    networks:
+      - igra-l2-network
 
   stats:
     depends_on:
@@ -78,6 +95,8 @@ services:
     extends:
       file: ./services/stats.yml
       service: stats
+    networks:
+      - igra-l2-network
 
   user-ops-indexer:
     depends_on:
@@ -86,6 +105,8 @@ services:
     extends:
       file: ./services/user-ops-indexer.yml
       service: user-ops-indexer
+    networks:
+      - igra-l2-network
 
   proxy:
     depends_on:
@@ -95,3 +116,10 @@ services:
     extends:
       file: ./services/nginx.yml
       service: proxy
+    networks:
+      - igra-l2-network
+
+networks:
+  igra-l2-network:
+    name: igra-l2-network
+    external: true
