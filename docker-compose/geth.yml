@@ -43,6 +43,11 @@ services:
       ETHEREUM_JSONRPC_HTTP_URL: "http://igra-dev-el:8545"
       ETHEREUM_JSONRPC_TRACE_URL: "http://igra-dev-el:8545"
       CHAIN_ID: "2600"
+      CORS_ALLOW_ALL_ORIGINS: "true"
+      CORS_ALLOW_ALL_HEADERS: "true"
+      PORT: "4000"
+      SOCKET_ROOT: "/socket"
+      API_PATH: "/"
 
   visualizer:
     extends:
