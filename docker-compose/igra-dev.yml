@@ -126,4 +126,6 @@ services:
       file: ./services/nginx.yml
       service: proxy
     networks:
-      - igra-l2-network
+      igra-l2-network:
+        aliases:
+          - proxy
