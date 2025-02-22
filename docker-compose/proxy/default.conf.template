@@ -17,6 +17,10 @@ server {
         img-src 'self' data: https:;
     " always;   
 
+    add_header 'Access-Control-Allow-Origin' '*' always;
+    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+    add_header 'Access-Control-Allow-Headers' '*' always;
+
 
     location ~ ^/(api(?!-docs$)|socket|sitemap.xml|auth/auth0|auth/auth0/callback|auth/logout) {
         proxy_pass            ${BACK_PROXY_PASS};
