@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   frontend:
@@ -6,6 +6,15 @@ services:
     pull_policy: always
     platform: linux/amd64
     restart: always
-    container_name: 'frontend'
+    container_name: "frontend"
     env_file:
-      -  ../envs/common-frontend.env
+      - ../envs/common-frontend.env
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
