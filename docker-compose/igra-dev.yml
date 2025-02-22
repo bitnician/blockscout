@@ -45,6 +45,7 @@ services:
       ETHEREUM_JSONRPC_WS_URL: "ws://igra-dev-el:8546"
       ETHEREUM_JSONRPC_HTTP_URL: "http://igra-dev-el:8545"
       ETHEREUM_JSONRPC_TRACE_URL: "http://igra-dev-el:8545"
+      ETHEREUM_JSONRPC_TRANSPORT: "http"
       CHAIN_ID: "2600"
       ENABLE_WEBSOCKET_CONTROLLER: "true"
       SOCKET_ROOT: "/"
