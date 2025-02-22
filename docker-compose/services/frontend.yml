@@ -9,6 +9,9 @@ services:
     container_name: "frontend"
     env_file:
       - ../envs/common-frontend.env
+    volumes:
+      - ./public/assets:/app/public/assets
+    user: "1000:1000"
     deploy:
       resources:
         limits:
