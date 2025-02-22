@@ -47,6 +47,7 @@ services:
       ETHEREUM_JSONRPC_TRACE_URL: "http://igra-dev-el:8545"
       CHAIN_ID: "2600"
       ENABLE_WEBSOCKET_CONTROLLER: "true"
+      SOCKET_ROOT: "/"
     networks:
       - igra-l2-network
 
