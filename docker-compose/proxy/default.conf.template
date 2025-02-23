@@ -7,14 +7,21 @@ server {
     listen       80;
     server_name  localhost;
     proxy_http_version 1.1;
-    add_header Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' ws: wss: http: https: localhost:*; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://v1.slise.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;" always;
-
-
-    add_header 'Access-Control-Allow-Origin' '*' always;
-    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
-    add_header 'Access-Control-Allow-Headers' '*' always;
+    add_header Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' ws: wss: http: https: localhost:*; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://v1.slise.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://v1.slise.xyz" always;
 
     location ~ ^/(api(?!-docs$)|socket|sitemap.xml|auth/auth0|auth/auth0/callback|auth/logout) {
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            return 204;
+        }
+
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization' always;
+
         proxy_pass            ${BACK_PROXY_PASS};
         proxy_http_version    1.1;
         proxy_set_header      Host "$host";
@@ -25,6 +32,7 @@ server {
         proxy_set_header      Connection $connection_upgrade;
         proxy_cache_bypass    $http_upgrade;
     }
+
     location / {
         proxy_pass            ${FRONT_PROXY_PASS};
         proxy_http_version    1.1;
@@ -37,6 +45,7 @@ server {
         proxy_cache_bypass    $http_upgrade;
     }
 }
+
 server {
     listen       8080;
     server_name  localhost;
@@ -45,7 +54,7 @@ server {
     proxy_hide_header Access-Control-Allow-Methods;
     add_header 'Access-Control-Allow-Credentials' 'true' always;
     add_header 'Access-Control-Allow-Methods' 'PUT, GET, POST, OPTIONS, DELETE, PATCH' always;
-    add_header 'Access-Control-Allow-Origin' '*' always;  # Instead of http://localhost
+    add_header 'Access-Control-Allow-Origin' '*' always;
 
     location / {
         proxy_pass            http://stats:8050/;
@@ -59,6 +68,7 @@ server {
         proxy_cache_bypass    $http_upgrade;
     }
 }
+
 server {
     listen       8081;
     server_name  localhost;
@@ -68,7 +78,7 @@ server {
     add_header 'Access-Control-Allow-Credentials' 'true' always;
     add_header 'Access-Control-Allow-Methods' 'PUT, GET, POST, OPTIONS, DELETE, PATCH' always;
     add_header 'Access-Control-Allow-Headers' 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,x-csrf-token' always;
-    add_header 'Access-Control-Allow-Origin' '*' always;  # Instead of http://localhost
+    add_header 'Access-Control-Allow-Origin' '*' always;
 
     location / {
         proxy_pass            http://visualizer:8050/;
