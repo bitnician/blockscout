@@ -49,6 +49,9 @@ services:
       CHAIN_ID: "2600"
       ENABLE_WEBSOCKET_CONTROLLER: "true"
       SOCKET_ROOT: "/"
+      CHAIN_SPEC_PATH: "" # Set to empty to skip genesis.json requirement
+      DISABLE_INDEXER: "false"
+      DISABLE_REALTIME_INDEXER: "false"
     networks:
       - igra-l2-network
 
