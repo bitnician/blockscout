@@ -52,6 +52,8 @@ services:
       CHAIN_SPEC_PATH: "" # Set to empty to skip genesis.json requirement
       DISABLE_INDEXER: "false"
       DISABLE_REALTIME_INDEXER: "false"
+      DISABLE_WEBSOCKET_CONTROLLER: "true"
+      MIX_ENV: "dev"
     networks:
       - igra-l2-network
 
